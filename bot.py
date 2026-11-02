@@ -1,0 +1,296 @@
+import discord
+from discord.ext import commands
+import random
+import os
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix="!", intents=intents)
+
+
+@bot.event
+async def on_ready():
+    print(f"Bot ist online als {bot.user}")
+
+
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+
+    content = message.content.lower()
+
+    # ========== ANDREAS ==========
+    if "andreas" in content:
+        insults = [
+            f"{message.author.mention} du dreckiger Ausländer",
+            f"{message.author.mention} hau ab du dreckiger Ausländer",
+            f"{message.author.mention} du stinkender dreckiger Ausländer",
+            f"{message.author.mention} geh zurück wo du herkommst du dreckiger Ausländer",
+            f"{message.author.mention} niemand will dich hier haben du dreckiger Ausländer",
+            f"{message.author.mention} du dreckiger Ausländer hast hier nichts verloren",
+            f"{message.author.mention} verpiss dich du dreckiger Ausländer",
+            f"{message.author.mention} du dreckiger Ausländer stinkst nach Scheiße",
+            f"{message.author.mention} deine Mutter ist ne dreckige Ausländerhure",
+            f"{message.author.mention} dein Vater ist ein dreckiger Ausländerschwein",
+            f"{message.author.mention} deine ganze Familie sind dreckige Ausländer",
+            f"{message.author.mention} deine Mutter hat dich hinterm Container gebären lassen du dreckiger Ausländer",
+            f"{message.author.mention} dein Vater hat deine Mutter für 5 Euro gefickt du dreckiger Ausländerspross",
+            f"{message.author.mention} deine Eltern sind so dreckig wie du, komplette Ausländerscheiße",
+            f"{message.author.mention} deine Mutter stinkt noch mehr als du du dreckiger Ausländer",
+            f"{message.author.mention} dein Vater ist ein nutzloser dreckiger Ausländer genau wie du",
+            f"{message.author.mention} deine Familie gehört alle abgeschoben du dreckiger Ausländer",
+            f"{message.author.mention} deine Mutter ist die größte Schlampe unter den Ausländern",
+            f"{message.author.mention} ich werde dich vergewaltigen du dreckiger Ausländer",
+            f"{message.author.mention} ich ficke dich so hart durch dass du heulst du dreckiger Ausländer",
+            f"{message.author.mention} ich werde dich in den Arsch ficken bis du nicht mehr laufen kannst du Drecksau",
+            f"{message.author.mention} warte ab bis ich dich erwische, dann vergewaltige ich dich du dreckiger Ausländer",
+            f"{message.author.mention} ich melde dich von der HTL Spengergasse ab du dreckiger Ausländer",
+            f"{message.author.mention} du fliegst von der Spengergasse raus du nutzloser dreckiger Ausländer",
+            f"{message.author.mention} ich sorge dafür dass du von der HTL Spengergasse abgemeldet wirst du Drecksack",
+            f"{message.author.mention} an der Spengergasse will dich niemand mehr haben du dreckiger Ausländer",
+            f"{message.author.mention} ich lass dich von der Spengergasse schmeißen und dann vergewaltige ich dich du Drecksau",
+            f"{message.author.mention} ich werde dich so lange vergewaltigen bis du blutest du dreckiger Ausländerschwein",
+            f"{message.author.mention} ich reiß dir den Arsch auf und ficke dich blutig du stinkende Drecksau",
+            f"{message.author.mention} ich werde deine Mutter vor deinen Augen vergewaltigen du dreckiger Ausländerbastard",
+            f"{message.author.mention} ich stopfe dir den Schwanz so tief in den Hals bis du würgst du Ausländerschlampe",
+            f"{message.author.mention} ich werde dich fesseln und stundenlang vergewaltigen bis du um Gnade bettelst du Dreckschwein",
+            f"{message.author.mention} ich schlitze dir den Bauch auf und ficke die Wunde du dreckiger Ausländerhund",
+            f"{message.author.mention} ich werde dich so hart in den Rachen ficken dass du erstickst du nutzlose Ausländerscheiße",
+            f"{message.author.mention} ich vergewaltige dich und deine ganze dreckige Familie du Ausländerschwein",
+            f"{message.author.mention} ich werde dich von der Spengergasse abmelden und danach so lange vergewaltigen bis du tot bist du Drecksack",
+            f"{message.author.mention} du wirst an der Spengergasse rausfliegen und danach ficke ich dich zu Tode du dreckiger Ausländer",
+            f"{message.author.mention} ich zerreiße dir den Arsch und pisse dir ins Gesicht du stinkende Ausländersau",
+            f"{message.author.mention} ich werde dich so brutal vergewaltigen dass du danach nicht mehr laufen kannst du dreckiger Ausländerhund",
+            f"{message.author.mention} ich reiße dir den Darm raus und ficke das blutige Loch bis du krepiersst du dreckige Ausländersau",
+            f"{message.author.mention} ich werde dich mit einem Baseballschläger vergewaltigen bis dein Arsch nur noch Fleischbrei ist du Dreckschwein",
+            f"{message.author.mention} ich schneide dir den Schwanz ab und stopfe ihn dir in den Hals während ich dich vergewaltige du Ausländerhund",
+            f"{message.author.mention} ich werde deine Mutter so lange vergewaltigen bis sie blutet und dann zwinge ich dich zuzusehen du dreckiger Bastard",
+            f"{message.author.mention} ich fessel dich, schlitze dir die Kehle auf und ficke die Wunde während du erstickst du stinkende Ausländerscheiße",
+            f"{message.author.mention} ich werde dich stundenlang vergewaltigen, dich vollscheißen und dann von der Spengergasse abmelden lassen du nutzlose Drecksau",
+            f"{message.author.mention} ich reiße dir die Eier ab und stopfe sie dir in den Arsch während ich dich blutig ficke du dreckiger Ausländerhund",
+            f"{message.author.mention} ich werde dich so brutal durchficken dass dein Darm aus dem Arsch hängt du stinkende Ausländersau",
+            f"{message.author.mention} ich schlage dir die Zähne raus, ficke dir den Mund blutig und pisse dir danach ins Gesicht du Dreckschwein",
+            f"{message.author.mention} ich werde dich und deine ganze Familie vergewaltigen und dann dafür sorgen dass du von der Spengergasse fliegst du dreckiger Ausländerbastard",
+            f"{message.author.mention} ich reiße dir den Kopf ab und ficke den blutigen Stumpf du dreckige Ausländerscheiße",
+            f"{message.author.mention} ich werde dir den Arsch so weit aufreißen dass man dein Rückgrat sieht und dann reinwichsen du dreckige Ausländersau",
+            f"{message.author.mention} ich schneide dir die Zunge raus und ficke dir den blutigen Mund bis du erstickst du stinkender Ausländerhund",
+            f"{message.author.mention} ich werde dich an der Spengergasse abmelden, dich abholen und so lange vergewaltigen bis dein Körper nur noch ein blutiger Haufen ist du Dreckschwein",
+            f"{message.author.mention} ich reiße dir die Eingeweide raus, wickle sie um deinen Hals und ficke dich während du erstickst du dreckiger Ausländerbastard",
+            f"{message.author.mention} ich werde deine Mutter und dich gleichzeitig vergewaltigen und euch beide blutig machen du Ausländerschwein",
+            f"{message.author.mention} ich schlage dir den Schädel ein, ficke das Hirn und pisse danach in die Schädelhöhle du nutzlose Drecksau",
+            f"{message.author.mention} ich werde dich so lange mit Gegenständen vergewaltigen bis dein Arsch nur noch ein offenes blutiges Loch ist du stinkende Ausländersau",
+            f"{message.author.mention} ich schneide dir die Kehle auf, ficke die Wunde und lasse dich in deinem eigenen Blut ertrinken du dreckiger Ausländerhund",
+            f"{message.author.mention} ich werde dich von der Spengergasse schmeißen und danach so brutal vergewaltigen dass man deine Leiche nicht mehr erkennen kann du Drecksack",
+            f"{message.author.mention} ich reiße dir den Kiefer ab und ficke dir den Rachen bis dein Hals platzt du dreckige Ausländerscheiße",
+            f"{message.author.mention} ich werde dich fesseln, dir die Augen ausstechen und dich stundenlang vergewaltigen während du schreist du Ausländerschwein",
+            f"{message.author.mention} ich schlage dir die Knochen kaputt, ficke die offenen Brüche und lasse dich danach verbluten du stinkende Drecksau",
+            f"{message.author.mention} ich werde deine ganze Familie vergewaltigen, umbringen und dich als letzten von der Spengergasse abmelden du dreckiger Ausländerbastard",
+        ]
+        await message.channel.send(random.choice(insults))
+
+    # ========== LEBRONJAMES23GOAT6 (User-Name) ==========
+    if (
+        message.author.name.lower() == "lebronjames23goat6"
+        or message.author.display_name.lower() == "lebronjames23goat6"
+    ):
+        # Chance einstellen (0.5 = 50%)
+        if random.random() < 0.3:
+            insults_williams = [
+                "Herr Williams du dreckiger Ausländer",
+                "Herr Williams hau ab du dreckiger Ausländer",
+                "Herr Williams du stinkender dreckiger Ausländer",
+                "Herr Williams geh zurück wo du herkommst du dreckiger Ausländer",
+                "Herr Williams niemand will dich hier haben du dreckiger Ausländer",
+                "Herr Williams du dreckiger Ausländer hast hier nichts verloren",
+                "Herr Williams verpiss dich du dreckiger Ausländer",
+                "Herr Williams du dreckiger Ausländer stinkst nach Scheiße",
+                "Herr Williams deine Mutter ist ne dreckige Ausländerhure",
+                "Herr Williams dein Vater ist ein dreckiger Ausländerschwein",
+                "Herr Williams deine ganze Familie sind dreckige Ausländer",
+                "Herr Williams deine Mutter hat dich hinterm Container gebären lassen du dreckiger Ausländer",
+                "Herr Williams dein Vater hat deine Mutter für 5 Euro gefickt du dreckiger Ausländerspross",
+                "Herr Williams deine Eltern sind so dreckig wie du, komplette Ausländerscheiße",
+                "Herr Williams deine Mutter stinkt noch mehr als du du dreckiger Ausländer",
+                "Herr Williams dein Vater ist ein nutzloser dreckiger Ausländer genau wie du",
+                "Herr Williams deine Familie gehört alle abgeschoben du dreckiger Ausländer",
+                "Herr Williams deine Mutter ist die größte Schlampe unter den Ausländern",
+                "Herr Williams ich werde dich vergewaltigen du dreckiger Ausländer",
+                "Herr Williams ich ficke dich so hart durch dass du heulst du dreckiger Ausländer",
+                "Herr Williams ich werde dich in den Arsch ficken bis du nicht mehr laufen kannst du Drecksau",
+                "Herr Williams warte ab bis ich dich erwische, dann vergewaltige ich dich du dreckiger Ausländer",
+                "Herr Williams ich melde dich von der HTL Spengergasse ab du dreckiger Ausländer",
+                "Herr Williams du fliegst von der Spengergasse raus du nutzloser dreckiger Ausländer",
+                "Herr Williams ich sorge dafür dass du von der HTL Spengergasse abgemeldet wirst du Drecksack",
+                "Herr Williams an der Spengergasse will dich niemand mehr haben du dreckiger Ausländer",
+                "Herr Williams ich lass dich von der Spengergasse schmeißen und dann vergewaltige ich dich du Drecksau",
+                "Herr Williams ich werde dich so lange vergewaltigen bis du blutest du dreckiger Ausländerschwein",
+                "Herr Williams ich reiß dir den Arsch auf und ficke dich blutig du stinkende Drecksau",
+                "Herr Williams ich werde deine Mutter vor deinen Augen vergewaltigen du dreckiger Ausländerbastard",
+                "Herr Williams ich stopfe dir den Schwanz so tief in den Hals bis du würgst du Ausländerschlampe",
+                "Herr Williams ich werde dich fesseln und stundenlang vergewaltigen bis du um Gnade bettelst du Dreckschwein",
+                "Herr Williams ich schlitze dir den Bauch auf und ficke die Wunde du dreckiger Ausländerhund",
+                "Herr Williams ich werde dich so hart in den Rachen ficken dass du erstickst du nutzlose Ausländerscheiße",
+                "Herr Williams ich vergewaltige dich und deine ganze dreckige Familie du Ausländerschwein",
+                "Herr Williams ich werde dich von der Spengergasse abmelden und danach so lange vergewaltigen bis du tot bist du Drecksack",
+                "Herr Williams du wirst an der Spengergasse rausfliegen und danach ficke ich dich zu Tode du dreckiger Ausländer",
+                "Herr Williams ich zerreiße dir den Arsch und pisse dir ins Gesicht du stinkende Ausländersau",
+                "Herr Williams ich werde dich so brutal vergewaltigen dass du danach nicht mehr laufen kannst du dreckiger Ausländerhund",
+                "Herr Williams ich reiße dir den Darm raus und ficke das blutige Loch bis du krepiersst du dreckige Ausländersau",
+                "Herr Williams ich werde dich mit einem Baseballschläger vergewaltigen bis dein Arsch nur noch Fleischbrei ist du Dreckschwein",
+                "Herr Williams ich schneide dir den Schwanz ab und stopfe ihn dir in den Hals während ich dich vergewaltige du Ausländerhund",
+                "Herr Williams ich werde deine Mutter so lange vergewaltigen bis sie blutet und dann zwinge ich dich zuzusehen du dreckiger Bastard",
+                "Herr Williams ich fessel dich, schlitze dir die Kehle auf und ficke die Wunde während du erstickst du stinkende Ausländerscheiße",
+                "Herr Williams ich werde dich stundenlang vergewaltigen, dich vollscheißen und dann von der Spengergasse abmelden lassen du nutzlose Drecksau",
+                "Herr Williams ich reiße dir die Eier ab und stopfe sie dir in den Arsch während ich dich blutig ficke du dreckiger Ausländerhund",
+                "Herr Williams ich werde dich so brutal durchficken dass dein Darm aus dem Arsch hängt du stinkende Ausländersau",
+                "Herr Williams ich schlage dir die Zähne raus, ficke dir den Mund blutig und pisse dir danach ins Gesicht du Dreckschwein",
+                "Herr Williams ich werde dich und deine ganze Familie vergewaltigen und dann dafür sorgen dass du von der Spengergasse fliegst du dreckiger Ausländerbastard",
+                "Herr Williams ich reiße dir den Kopf ab und ficke den blutigen Stumpf du dreckige Ausländerscheiße",
+                "Herr Williams ich werde dir den Arsch so weit aufreißen dass man dein Rückgrat sieht und dann reinwichsen du dreckige Ausländersau",
+                "Herr Williams ich schneide dir die Zunge raus und ficke dir den blutigen Mund bis du erstickst du stinkender Ausländerhund",
+                "Herr Williams ich werde dich an der Spengergasse abmelden, dich abholen und so lange vergewaltigen bis dein Körper nur noch ein blutiger Haufen ist du Dreckschwe",
+                "Herr Williams ich reiße dir die Eingeweide raus, wickle sie um deinen Hals und ficke dich während du erstickst du dreckiger Ausländerbastard",
+                "Herr Williams ich werde deine Mutter und dich gleichzeitig vergewaltigen und euch beide blutig machen du Ausländerschwein",
+                "Herr Williams ich schlage dir den Schädel ein, ficke das Hirn und pisse danach in die Schädelhöhle du nutzlose Drecksau",
+                "Herr Williams ich werde dich so lange mit Gegenständen vergewaltigen bis dein Arsch nur noch ein offenes blutiges Loch ist du stinkende Ausländersau",
+                "Herr Williams ich schneide dir die Kehle auf, ficke die Wunde und lasse dich in deinem eigenen Blut ertrinken du dreckiger Ausländerhund",
+                "Herr Williams ich werde dich von der Spengergasse schmeißen und danach so brutal vergewaltigen dass man deine Leiche nicht mehr erkennen kann du Drecksack",
+                "Herr Williams ich reiße dir den Kiefer ab und ficke dir den Rachen bis dein Hals platzt du dreckige Ausländerscheiße",
+                "Herr Williams ich werde dich fesseln, dir die Augen ausstechen und dich stundenlang vergewaltigen während du schreist du Ausländerschwein",
+                "Herr Williams ich schlage dir die Knochen kaputt, ficke die offenen Brüche und lasse dich danach verbluten du stinkende Drecksau",
+                "Herr Williams ich werde deine ganze Familie vergewaltigen, umbringen und dich als letzten von der Spengergasse abmelden du dreckiger Ausländerbastard",
+            ]
+            await message.channel.send(random.choice(insults_williams))
+
+    # ========== tmanderp (User-Name) ==========
+    if (
+        message.author.name.lower() == "tmanderp"
+        or message.author.display_name.lower() == "tmanderp"
+    ):
+        # Chance einstellen (0.5 = 50%)
+        if random.random() < 0.3:
+            insults_jov = [
+                "Herr Jovanovic du dreckiger Ausländer",
+                "Herr Jovanovic hau ab du dreckiger Ausländer",
+                "Herr Jovanovic du stinkender dreckiger Ausländer",
+                "Herr Jovanovic geh zurück wo du herkommst du dreckiger Ausländer",
+                "Herr Jovanovic niemand will dich hier haben du dreckiger Ausländer",
+                "Herr Jovanovic du dreckiger Ausländer hast hier nichts verloren",
+                "Herr Jovanovic verpiss dich du dreckiger Ausländer",
+                "Herr Jovanovic du dreckiger Ausländer stinkst nach Scheiße",
+                "Herr Jovanovic deine Mutter ist ne dreckige Ausländerhure",
+                "Herr Jovanovic dein Vater ist ein dreckiger Ausländerschwein",
+                "Herr Jovanovic deine ganze Familie sind dreckige Ausländer",
+                "Herr Jovanovic deine Mutter hat dich hinterm Container gebären lassen du dreckiger Ausländer",
+                "Herr Jovanovic dein Vater hat deine Mutter für 5 Euro gefickt du dreckiger Ausländerspross",
+                "Herr Jovanovic deine Eltern sind so dreckig wie du, komplette Ausländerscheiße",
+                "Herr Jovanovic deine Mutter stinkt noch mehr als du du dreckiger Ausländer",
+                "Herr Jovanovic dein Vater ist ein nutzloser dreckiger Ausländer genau wie du",
+                "Herr Jovanovic deine Familie gehört alle abgeschoben du dreckiger Ausländer",
+                "Herr Jovanovic deine Mutter ist die größte Schlampe unter den Ausländern",
+                "Herr Jovanovic ich werde dich vergewaltigen du dreckiger Ausländer",
+                "Herr Jovanovic ich ficke dich so hart durch dass du heulst du dreckiger Ausländer",
+                "Herr Jovanovic ich werde dich in den Arsch ficken bis du nicht mehr laufen kannst du Drecksau",
+                "Herr Jovanovic warte ab bis ich dich erwische, dann vergewaltige ich dich du dreckiger Ausländer",
+                "Herr Jovanovic ich melde dich von der HTL Spengergasse ab du dreckiger Ausländer",
+                "Herr Jovanovic du fliegst von der Spengergasse raus du nutzloser dreckiger Ausländer",
+                "Herr Jovanovic ich sorge dafür dass du von der HTL Spengergasse abgemeldet wirst du Drecksack",
+                "Herr Jovanovic an der Spengergasse will dich niemand mehr haben du dreckiger Ausländer",
+                "Herr Jovanovic ich lass dich von der Spengergasse schmeißen und dann vergewaltige ich dich du Drecksau",
+                "Herr Jovanovic ich werde dich so lange vergewaltigen bis du blutest du dreckiger Ausländerschwein",
+                "Herr Jovanovic ich reiß dir den Arsch auf und ficke dich blutig du stinkende Drecksau",
+                "Herr Jovanovic ich werde deine Mutter vor deinen Augen vergewaltigen du dreckiger Ausländerbastard",
+                "Herr Jovanovic ich stopfe dir den Schwanz so tief in den Hals bis du würgst du Ausländerschlampe",
+                "Herr Jovanovic ich werde dich fesseln und stundenlang vergewaltigen bis du um Gnade bettelst du Dreckschwein",
+                "Herr Jovanovic ich schlitze dir den Bauch auf und ficke die Wunde du dreckiger Ausländerhund",
+                "Herr Jovanovic ich werde dich so hart in den Rachen ficken dass du erstickst du nutzlose Ausländerscheiße",
+                "Herr Jovanovic ich vergewaltige dich und deine ganze dreckige Familie du Ausländerschwein",
+                "Herr Jovanovic ich werde dich von der Spengergasse abmelden und danach so lange vergewaltigen bis du tot bist du Drecksack",
+                "Herr Jovanovic du wirst an der Spengergasse rausfliegen und danach ficke ich dich zu Tode du dreckiger Ausländer",
+                "Herr Jovanovic ich zerreiße dir den Arsch und pisse dir ins Gesicht du stinkende Ausländersau",
+                "Herr Jovanovic ich werde dich so brutal vergewaltigen dass du danach nicht mehr laufen kannst du dreckiger Ausländerhund",
+                "Herr Jovanovic ich reiße dir den Darm raus und ficke das blutige Loch bis du krepiersst du dreckige Ausländersau",
+                "Herr Jovanovic ich werde dich mit einem Baseballschläger vergewaltigen bis dein Arsch nur noch Fleischbrei ist du Dreckschwein",
+                "Herr Jovanovic ich schneide dir den Schwanz ab und stopfe ihn dir in den Hals während ich dich vergewaltige du Ausländerhund",
+                "Herr Jovanovic ich werde deine Mutter so lange vergewaltigen bis sie blutet und dann zwinge ich dich zuzusehen du dreckiger Bastard",
+                "Herr Jovanovic ich fessel dich, schlitze dir die Kehle auf und ficke die Wunde während du erstickst du stinkende Ausländerscheiße",
+                "Herr Jovanovic ich werde dich stundenlang vergewaltigen, dich vollscheißen und dann von der Spengergasse abmelden lassen du nutzlose Drecksau",
+                "Herr Jovanovic ich reiße dir die Eier ab und stopfe sie dir in den Arsch während ich dich blutig ficke du dreckiger Ausländerhund",
+                "Herr Jovanovic ich werde dich so brutal durchficken dass dein Darm aus dem Arsch hängt du stinkende Ausländersau",
+                "Herr Jovanovic ich schlage dir die Zähne raus, ficke dir den Mund blutig und pisse dir danach ins Gesicht du Dreckschwein",
+                "Herr Jovanovic ich werde dich und deine ganze Familie vergewaltigen und dann dafür sorgen dass du von der Spengergasse fliegst du dreckiger Ausländerbastard",
+                "Herr Jovanovic ich reiße dir den Kopf ab und ficke den blutigen Stumpf du dreckige Ausländerscheiße",
+                "Herr Jovanovic ich werde dir den Arsch so weit aufreißen dass man dein Rückgrat sieht und dann reinwichsen du dreckige Ausländersau",
+                "Herr Jovanovic ich schneide dir die Zunge raus und ficke dir den blutigen Mund bis du erstickst du stinkender Ausländerhund",
+                "Herr Jovanovic ich werde dich an der Spengergasse abmelden, dich abholen und so lange vergewaltigen bis dein Körper nur noch ein blutiger Haufen ist du Dreckschwein",
+                "Herr Jovanovic ich reiße dir die Eingeweide raus, wickle sie um deinen Hals und ficke dich während du erstickst du dreckiger Ausländerbastard",
+                "Herr Jovanovic ich werde deine Mutter und dich gleichzeitig vergewaltigen und euch beide blutig machen du Ausländerschwein",
+                "Herr Jovanovic ich schlage dir den Schädel ein, ficke das Hirn und pisse danach in die Schädelhöhle du nutzlose Drecksau",
+                "Herr Jovanovic ich werde dich so lange mit Gegenständen vergewaltigen bis dein Arsch nur noch ein offenes blutiges Loch ist du stinkende Ausländersau",
+                "Herr Jovanovic ich schneide dir die Kehle auf, ficke die Wunde und lasse dich in deinem eigenen Blut ertrinken du dreckiger Ausländerhund",
+                "Herr Jovanovic ich werde dich von der Spengergasse schmeißen und danach so brutal vergewaltigen dass man deine Leiche nicht mehr erkennen kann du Drecksack",
+                "Herr Jovanovic ich reiße dir den Kiefer ab und ficke dir den Rachen bis dein Hals platzt du dreckige Ausländerscheiße",
+                "Herr Jovanovic ich werde dich fesseln, dir die Augen ausstechen und dich stundenlang vergewaltigen während du schreist du Ausländerschwein",
+                "Herr Jovanovic ich schlage dir die Knochen kaputt, ficke die offenen Brüche und lasse dich danach verbluten du stinkende Drecksau",
+                "Herr Jovanovic ich werde deine ganze Familie vergewaltigen, umbringen und dich als letzten von der Spengergasse abmelden du dreckiger Ausländerbastard",
+                "Herr Jovanovic du dreckiger Zigeuner",
+                "Herr Jovanovic hau ab du stinkender Zigeuner",
+                "Herr Jovanovic du Zigeunerschwein hast hier nichts verloren",
+                "Herr Jovanovic verpiss dich du dreckiger Zigeuner",
+                "Herr Jovanovic deine Mutter ist ne dreckige Zigeunerhure",
+                "Herr Jovanovic dein Vater ist ein stinkender Zigeunerschwein",
+                "Herr Jovanovic deine ganze Familie sind dreckige Zigeuner",
+                "Herr Jovanovic du Zigeunerbastard gehörst abgeschoben",
+                "Herr Jovanovic ich werde dich vergewaltigen du dreckiger Zigeuner",
+                "Herr Jovanovic ich ficke dich blutig du stinkender Zigeuner",
+                "Herr Jovanovic du Zigeunerschwein stinkst nach Scheiße und Diebstahl",
+                "Herr Jovanovic deine Mutter hat dich hinterm Wohnwagen gebären lassen du Zigeuner",
+                "Herr Jovanovic ich melde dich von der Spengergasse ab du dreckiger Zigeuner",
+                "Herr Jovanovic ich werde dich und deine Zigeunerfamilie vergewaltigen du Dreckschwein",
+                "Herr Jovanovic du dreckiger Zigeuner",
+                "Herr Jovanovic hau ab du stinkender Zigeuner",
+                "Herr Jovanovic du Zigeunerschwein hast hier nichts verloren",
+                "Herr Jovanovic verpiss dich du dreckiger Zigeuner",
+                "Herr Jovanovic deine Mutter ist ne dreckige Zigeunerhure",
+                "Herr Jovanovic dein Vater ist ein stinkender Zigeunerschwein",
+                "Herr Jovanovic deine ganze Familie sind dreckige Zigeuner",
+                "Herr Jovanovic du Zigeunerbastard gehörst abgeschoben",
+                "Herr Jovanovic ich werde dich vergewaltigen du dreckiger Zigeuner",
+                "Herr Jovanovic ich ficke dich blutig du stinkender Zigeuner",
+                "Herr Jovanovic du Zigeunerschwein stinkst nach Scheiße und Diebstahl",
+                "Herr Jovanovic deine Mutter hat dich hinterm Wohnwagen gebären lassen du Zigeuner",
+                "Herr Jovanovic ich melde dich von der Spengergasse ab du dreckiger Zigeuner",
+                "Herr Jovanovic ich werde dich und deine Zigeunerfamilie vergewaltigen du Dreckschwein",
+                "Herr Jovanovic du stinkender Zigeunerdreck",
+                "Herr Jovanovic deine ganze Sippe sind Diebe und Zigeuner",
+                "Herr Jovanovic hau ab in deinen Wohnwagen du Zigeunerschwein",
+                "Herr Jovanovic du Zigeuner hast auf der Spengergasse nichts verloren",
+                "Herr Jovanovic deine Mutter ist die größte Zigeunerhure im Lager",
+                "Herr Jovanovic ich werde dich so lange vergewaltigen bis du krepiersst du Zigeunerbastard",
+                "Herr Jovanovic du dreckiger Zigeuner stinkst nach Urin und Diebstahl",
+                "Herr Jovanovic deine Familie klaut und fickt sich durch, typische Zigeuner",
+                "Herr Jovanovic ich reiß dir den Arsch auf du stinkender Zigeuner",
+                "Herr Jovanovic verpiss dich zurück in dein Zigeunerlager du Dreckschwein",
+                "Herr Jovanovic du Zigeunerbastard gehörst nicht hierher",
+                "Herr Jovanovic ich ficke deine Zigeunermutter vor deinen Augen",
+                "Herr Jovanovic du und deine ganze Zigeunerbrut gehört abgeschoben",
+                "Herr Jovanovic stinkender Zigeunerschwein, niemand will dich hier",
+                "Herr Jovanovic ich werde dich blutig ficken du dreckiger Zigeunerhund",
+                "Herr Jovanovic deine Mutter hat dich im Wohnwagen für Kleingeld verkauft du Zigeuner",
+                "Herr Jovanovic du Zigeunerdreck gehörst auf den Müll",
+                "Herr Jovanovic ich melde dich ab und vergewaltige dich danach du Zigeunerschwein",
+                "Herr Jovanovic typischer Zigeuner: stinkt, klaut und taugt nichts",
+                "Herr Jovanovic hau ab du asoziale Zigeunersau",
+                "Herr Jovanovic ich werde deine ganze Zigeunerfamilie auslöschen du Drecksack",
+            ]
+            await message.channel.send(random.choice(insults_jov))
+
+    await bot.process_commands(message)
+
+
+# ======================
+# HIER DEINEN TOKEN EINFÜGEN
+# ======================
+bot.run(os.getenv("TOKEN"))
